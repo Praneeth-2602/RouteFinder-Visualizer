@@ -3,6 +3,7 @@ import recursiveDivision from "../lib/algorithms/maze/recursiveDivision";
 import { MAX_COLS, MAX_ROWS, SPEEDS } from "./constants";
 import { constructBorder } from "./constructBorder";
 import { GridType, MazeType, SpeedType, TileType } from "./types";
+import { primsAlgorithm } from "../lib/algorithms/maze/prim";
 
 export const runMazeAlgorithm = async ({
     maze,
@@ -38,5 +39,8 @@ export const runMazeAlgorithm = async ({
         setTimeout(() => {
             setIsDisabled(false);
         }, 800 * currentSpeed);
+    } else if (maze === "PRIM") {
+        await primsAlgorithm(grid, startTile, endTile, setIsDisabled, speed);
     }
+
 };

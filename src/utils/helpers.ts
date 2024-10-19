@@ -100,3 +100,45 @@ export const getDirection = (from: TileType, to: TileType) => {
         colDir: to.col - from.col,
     };
 };
+
+// Helper function to get the neighbors of a cell (in four directions)
+export function getNeighbors(grid: GridType, row: number, col: number) {
+    const neighbors = [];
+    if (isInBounds(row - 2, col)) neighbors.push(grid[row - 2][col]); // Top
+    if (isInBounds(row + 2, col)) neighbors.push(grid[row + 2][col]); // Bottom
+    if (isInBounds(row, col - 2)) neighbors.push(grid[row][col - 2]); // Left
+    if (isInBounds(row, col + 2)) neighbors.push(grid[row][col + 2]); // Right
+    return neighbors;
+}
+
+// Helper function to get the directions of a cell (in four directions)
+export function getDirections(from: TileType, to: TileType) {
+    if (from.row === to.row) return 1; // Horizontal
+    else return 0; // Vertical
+}
+
+// Helper function to check if a cell is within bounds
+export function isInBounds(row: number, col: number) {
+    return row >= 0 && row < MAX_ROWS && col >= 0 && col < MAX_COLS;
+}
+
+export const getAdjacentTiles = (grid: GridType, row: number, col: number) => {
+    const adjacent = [];
+    const directions = [
+        { r: -1, c: 0 }, // Up
+        { r: 1, c: 0 },  // Down
+        { r: 0, c: -1 }, // Left
+        { r: 0, c: 1 }   // Right
+    ];
+
+    for (const { r, c } of directions) {
+        const newRow = row + r;
+        const newCol = col + c;
+
+        if (newRow >= 0 && newRow < MAX_ROWS && newCol >= 0 && newCol < MAX_COLS) {
+            adjacent.push(grid[newRow][newCol]);
+        }
+    }
+
+    return adjacent;
+};
